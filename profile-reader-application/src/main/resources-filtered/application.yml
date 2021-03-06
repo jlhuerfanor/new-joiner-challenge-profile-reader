@@ -1,0 +1,16 @@
+application:
+  security:
+    cors: '[ { "pattern": "/**", "origins": [ "*" ], "methods": [ "*" ], "headers": [ "*" ] } ]'
+  localization:
+    time:
+      zone-id: America/Bogota
+  json:
+    format:
+      local-date: yyyy-MM-dd'T'HH:mm:ss.SSSX
+      local-time: yyyy-MM-dd'T'HH:mm:ss.SSSX
+      local-datetime: yyyy-MM-dd'T'HH:mm:ss.SSSX
+
+server:
+  servlet:
+    context-path: /wap/profile-reader
+  port: 8080

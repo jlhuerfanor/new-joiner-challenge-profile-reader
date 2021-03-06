@@ -1,0 +1,14 @@
+config:
+  remote:
+    name: @cloud.config.application@
+    profile: @cloud.config.profile@
+    label: @cloud.config.label@
+    url: @cloud.config.url@
+    retry: true
+    read-timeout: 1000
+    connect-timeout: 1000
+    retry-template:
+      initial-interval: 1000
+      max-interval: 10000
+      multiplier: 1.6
+      max-attemps: 5

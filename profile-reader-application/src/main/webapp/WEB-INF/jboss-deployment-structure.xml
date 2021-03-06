@@ -1,0 +1,19 @@
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.3"
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            xsi:schemaLocation="urn:jboss:deployment-structure:1.3 urn:jboss:deployment-structure:1.3">
+    <deployment>
+        <exclude-subsystems>
+            <subsystem name="weld"/>
+            <subsystem name="jpa"/>
+            <subsystem name="jsf"/>
+            <subsystem name="transactions"/>
+        </exclude-subsystems>
+        <exclusions>
+            <module name="org.jboss.as.weld"/>
+            <module name="org.jboss.as.jpa"/>
+            <module name="org.jboss.as.jsf"/>
+            <module name="org.jboss.as.transactions"/>
+            <module name="javaee.api"/>
+        </exclusions>
+    </deployment>
+</jboss-deployment-structure>
