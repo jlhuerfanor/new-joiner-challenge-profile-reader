@@ -46,30 +46,6 @@ public class DocsProfileReader implements ProfileReader {
         }
     }
 
-    public List<XWPFSDT> getFromBody(XWPFDocument document) {
-        var cursor = document.getDocument().getBody().newCursor();
-        var qnameSdt = new QName("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "sdt", "w");
-        var allStds = new ArrayList<XWPFSDT>();
-
-        while(cursor.hasNextToken()) {
-            var tokenType = cursor.toNextToken();
-
-            if (tokenType.isStart()) {
-                var name = cursor.getName();
-                if (qnameSdt.equals(name)) {
-                    var obj = cursor.getObject();
-                    if (obj instanceof CTSdtRun) {
-                        allStds.add(new XWPFSDT((CTSdtRun)cursor.getObject(), document));
-                    } else if (obj instanceof CTSdtBlock) {
-                        allStds.add(new XWPFSDT((CTSdtBlock)cursor.getObject(), document));
-                    }
-                }
-            }
-        }
-
-        return allStds;
-    }
-
     public static class WordFileAccessException extends RuntimeException {
         public WordFileAccessException(Throwable e) {
             super(e);
