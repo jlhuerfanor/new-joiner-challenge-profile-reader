@@ -1,5 +1,6 @@
 package com.endava.challenge.newjoiner.profilereader.infrastructure.platform.config;
 
+import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.config.parameter.AmqpParameter;
 import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.config.parameter.CorsParameter;
 import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.config.parameter.LocalizationParameter;
 import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.web.security.CorsMapping;
@@ -40,6 +41,25 @@ public class ParameterConfiguration {
                 .localDateFormat(localDateFormat)
                 .localTimeFormat(localTimeFormat)
                 .localDateTimeFormat(localDateTimeFormat)
+                .build();
+    }
+
+    @Bean
+    public AmqpParameter amqpParameter(
+            @Value("${application.message.amqp.topic-exchange-name}") String topicExchangeName,
+            @Value("${application.message.amqp.queue-name}") String queueName,
+            @Value("${application.message.amqp.default-topic}") String defaultTopic,
+            @Value("${application.message.amqp.uri}") String uri,
+            @Value("${application.message.amqp.username}") String username,
+            @Value("${application.message.amqp.password}") String password
+    ) {
+        return AmqpParameter.builder()
+                .uri(uri)
+                .topicExchangeName(topicExchangeName)
+                .queueName(queueName)
+                .defaultTopic(defaultTopic)
+                .username(username)
+                .password(password)
                 .build();
     }
 }

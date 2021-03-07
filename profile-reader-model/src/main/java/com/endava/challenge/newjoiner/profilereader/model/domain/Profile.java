@@ -18,4 +18,18 @@ public class Profile {
     private String englishLevel;
     private String domainExperience;
     private String filename;
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "idNumber=" + idNumber +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", stack='" + stack + '\'' +
+                ", role='" + role + '\'' +
+                ", englishLevel='" + englishLevel + '\'' +
+                ", domainExperience='" + domainExperience + '\'' +
+                ", filename='" + filename + '\'' +
+                '}';
+    }
 }

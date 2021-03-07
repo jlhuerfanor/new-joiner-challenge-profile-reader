@@ -1,6 +1,7 @@
 package com.endava.challenge.newjoiner.profilereader.business.reader;
 
 import com.endava.challenge.newjoiner.profilereader.control.converter.Converter;
+import com.endava.challenge.newjoiner.profilereader.control.message.MessageQueue;
 import com.endava.challenge.newjoiner.profilereader.control.validation.Validation;
 import com.endava.challenge.newjoiner.profilereader.model.domain.FileType;
 import com.endava.challenge.newjoiner.profilereader.model.domain.Profile;
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ProfileReaderBusinessTest {
 
     private Converter converter;
+    private MessageQueue messageQueue;
     private ProfileReaderBusiness profileReaderBusiness;
     private ProfileFile profileFile;
     private Profile profileReturned;
@@ -31,15 +33,24 @@ class ProfileReaderBusinessTest {
     @BeforeEach
     void setupTest() {
         converter = Mockito.mock(Converter.class);
-        profileReaderBusiness = new ProfileReaderBusiness(converter);
+        messageQueue = Mockito.mock(MessageQueue.class);
+        profileReaderBusiness = new ProfileReaderBusiness(converter, messageQueue);
 
-        Mockito.doAnswer(this::funcionConvertirA)
+        Mockito.doAnswer(this::functionConvertTo)
                 .when(converter)
                 .convertTo(Mockito.eq(ProfileFile.class),
                         Mockito.eq(Profile.class));
+
+        Mockito.doAnswer(this::functionReturnProfile)
+                .when(messageQueue)
+                .send(Mockito.any());
     }
 
-    private Object funcionConvertirA(InvocationOnMock invocationOnMock) {
+    private Object functionReturnProfile(InvocationOnMock invocationOnMock) {
+        return invocationOnMock.getArgument(0);
+    }
+
+    private Object functionConvertTo(InvocationOnMock invocationOnMock) {
         return (Function<? super ProfileFile, Profile>) (obj) -> this.converter.convert(obj, ProfileFile.class, Profile.class);
     }
 
