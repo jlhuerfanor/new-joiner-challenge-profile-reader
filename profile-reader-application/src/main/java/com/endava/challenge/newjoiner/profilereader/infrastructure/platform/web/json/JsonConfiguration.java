@@ -1,8 +1,8 @@
 package com.endava.challenge.newjoiner.profilereader.infrastructure.platform.web.json;
 
+import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.config.parameter.LocalizationParameter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.config.parameter.LocalizationParameter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
