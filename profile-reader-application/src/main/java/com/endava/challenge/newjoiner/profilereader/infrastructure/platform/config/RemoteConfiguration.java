@@ -1,8 +1,5 @@
 package com.endava.challenge.newjoiner.profilereader.infrastructure.platform.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.retry.support.RetryTemplate;
 

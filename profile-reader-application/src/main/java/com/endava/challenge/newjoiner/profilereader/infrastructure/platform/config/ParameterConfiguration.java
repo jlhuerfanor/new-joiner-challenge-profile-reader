@@ -1,10 +1,10 @@
 package com.endava.challenge.newjoiner.profilereader.infrastructure.platform.config;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.config.parameter.CorsParameter;
 import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.config.parameter.LocalizationParameter;
 import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.web.security.CorsMapping;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
