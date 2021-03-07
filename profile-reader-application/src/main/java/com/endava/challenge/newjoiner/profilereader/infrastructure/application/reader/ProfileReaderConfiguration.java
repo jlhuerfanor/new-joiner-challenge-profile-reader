@@ -2,6 +2,7 @@ package com.endava.challenge.newjoiner.profilereader.infrastructure.application.
 
 import com.endava.challenge.newjoiner.profilereader.business.reader.ProfileReaderBusiness;
 import com.endava.challenge.newjoiner.profilereader.control.converter.Converter;
+import com.endava.challenge.newjoiner.profilereader.control.reader.DocsProfileReader;
 import com.endava.challenge.newjoiner.profilereader.control.reader.PdfProfileReader;
 import com.endava.challenge.newjoiner.profilereader.control.reader.ProfileReadingStrategy;
 import com.endava.challenge.newjoiner.profilereader.control.reader.ProfileReadingStrategyMap;
@@ -20,6 +21,8 @@ public class ProfileReaderConfiguration {
     @Bean
     public ProfileReadingStrategy profileReadingStrategy() {
         return new ProfileReadingStrategyMap()
-                .registerReader(FileType.PDF, new PdfProfileReader());
+                .registerReader(FileType.PDF, new PdfProfileReader())
+                .registerReader(FileType.WORD, new DocsProfileReader())
+                .registerReader(FileType.DOCX, new DocsProfileReader());
     }
 }

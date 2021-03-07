@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum FileType {
     PDF("application/pdf"),
-    WORD("application/msword")
+    WORD("application/msword"),
+    DOCX("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     ;
     private final String mediaType;
 
