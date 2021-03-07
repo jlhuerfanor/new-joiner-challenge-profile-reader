@@ -29,20 +29,7 @@ public class PdfProfileReader implements ProfileReader {
                             .collect(Collectors.toMap(PDField::getFullyQualifiedName, PDField::getValueAsString)))
                     .orElseGet(Map::of);
 
-            return Profile.builder()
-                    .filename(file.getFilename())
-                    .idNumber(Optional.of("IDNumber")
-                            .map(fieldMap::get)
-                            .map(BigInteger::new)
-                            .orElse(null))
-                    .firstName(fieldMap.get("FirstName"))
-                    .lastName(fieldMap.get("LastName"))
-                    .stack(fieldMap.get("Stack"))
-                    .role(fieldMap.get("Role"))
-                    .englishLevel(fieldMap.get("EnglishLevel"))
-                    .domainExperience(fieldMap.get("DomainExperience"))
-
-                    .build();
+            return ProfileReader.fromMap(file.getFilename(), fieldMap);
         } catch (IOException e) {
             throw new PdfFileAccessException(e);
         }
