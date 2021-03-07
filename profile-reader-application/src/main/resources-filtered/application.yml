@@ -10,6 +10,17 @@ application:
       local-time: yyyy-MM-dd'T'HH:mm:ss.SSSX
       local-datetime: yyyy-MM-dd'T'HH:mm:ss.SSSX
 
+  message:
+    amqp:
+      uri: amqps://eagle.rmq.cloudamqp.com/ugnhyqna
+      username: ugnhyqna
+      password: OOwedAYB1y3BX3v4FjoX598A81S0QNrj
+      topic-exchange-name: profile-exchange
+      queue-name: profile-reader-queue
+      default-topic: joiner.profile.new
+
+# ---------------
+
 server:
   servlet:
     context-path: /wap/profile-reader
