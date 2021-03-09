@@ -51,7 +51,7 @@ public class WebFluxConfiguration implements WebFluxConfigurer {
 
     @Bean
     @Order(-2)
-    public WebExceptionHandler errorWebExceptionHandler() {
+    public WebExceptionHandler globalErrorWebExceptionHandler() {
         return new GlobalExceptionHandler(gson);
     }
 
