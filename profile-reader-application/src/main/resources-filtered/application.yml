@@ -24,4 +24,4 @@ application:
 server:
   servlet:
     context-path: /wap/profile-reader
-  port: 8080
+  port: 8091
