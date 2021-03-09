@@ -2,17 +2,16 @@ package com.endava.challenge.newjoiner.profilereader.control.reader;
 
 import com.endava.challenge.newjoiner.profilereader.model.domain.Profile;
 import com.endava.challenge.newjoiner.profilereader.model.domain.ProfileFile;
+import org.apache.poi.EmptyFileException;
+import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.apache.poi.xwpf.usermodel.XWPFAbstractSDT;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFSDT;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSdtBlock;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSdtRun;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.namespace.QName;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,7 +40,7 @@ public class DocsProfileReader implements ProfileReader {
                             std -> std.getContent().getText()));
 
             return ProfileReader.fromMap(file.getFilename(), fieldMap);
-        } catch (Exception e) {
+        } catch (IOException | EmptyFileException | NotOfficeXmlFileException e) {
             throw new WordFileAccessException(e);
         }
     }
