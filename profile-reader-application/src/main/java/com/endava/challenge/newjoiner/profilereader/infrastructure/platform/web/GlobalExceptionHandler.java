@@ -5,18 +5,17 @@ import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
+public class GlobalExceptionHandler implements WebExceptionHandler {
     private static Map<Class<? extends Throwable>, Integer> errorCodeMap = Map.ofEntries(
             Map.entry(Validation.ValidationException.class, 400)
     );
