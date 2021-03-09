@@ -68,6 +68,7 @@ class FilePartToProfileFileConverterTest {
 
     private void thenIGetTheExpectedProfileFileWithoutFileType() throws IOException {
         StepVerifier verifier = StepVerifier.create(this.profileFileObtained)
+                .expectNextCount(1)
                 .consumeNextWith((profile) -> {
                     assertEquals(this.multipartFile.filename(), profile.getFilename());
                     assertNotNull(profile.getContentStream());
@@ -100,6 +101,7 @@ class FilePartToProfileFileConverterTest {
 
     private void thenIGetTheExpectedProfileFile() throws IOException {
         StepVerifier verifier = StepVerifier.create(this.profileFileObtained)
+                .expectNextCount(1)
                 .consumeNextWith((profile) -> {
                         assertEquals(this.multipartFile.filename(), profile.getFilename());
                         assertNotNull(profile.getContentStream());
