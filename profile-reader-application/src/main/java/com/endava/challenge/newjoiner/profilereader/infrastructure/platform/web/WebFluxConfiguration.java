@@ -4,7 +4,6 @@ import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.conf
 import com.endava.challenge.newjoiner.profilereader.infrastructure.platform.web.json.GsonHttpMessageEncoder;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -14,6 +13,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
+import org.springframework.web.server.WebExceptionHandler;
 import org.springframework.web.server.WebFilter;
 
 @Configuration
@@ -51,7 +51,7 @@ public class WebFluxConfiguration implements WebFluxConfigurer {
 
     @Bean
     @Order(-2)
-    public ErrorWebExceptionHandler errorWebExceptionHandler() {
+    public WebExceptionHandler errorWebExceptionHandler() {
         return new GlobalExceptionHandler(gson);
     }
 
