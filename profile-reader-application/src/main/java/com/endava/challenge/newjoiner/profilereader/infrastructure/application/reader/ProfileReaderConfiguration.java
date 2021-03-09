@@ -1,7 +1,7 @@
 package com.endava.challenge.newjoiner.profilereader.infrastructure.application.reader;
 
 import com.endava.challenge.newjoiner.profilereader.business.reader.ProfileReaderBusiness;
-import com.endava.challenge.newjoiner.profilereader.control.converter.Converter;
+import com.endava.challenge.newjoiner.profilereader.control.converter.ReactiveConversionService;
 import com.endava.challenge.newjoiner.profilereader.control.message.MessageQueue;
 import com.endava.challenge.newjoiner.profilereader.control.reader.DocsProfileReader;
 import com.endava.challenge.newjoiner.profilereader.control.reader.PdfProfileReader;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class ProfileReaderConfiguration {
 
     @Bean
-    public ProfileReaderBusiness profileReaderBusiness(Converter converter, MessageQueue messageQueue) {
+    public ProfileReaderBusiness profileReaderBusiness(ReactiveConversionService converter, MessageQueue messageQueue) {
         return new ProfileReaderBusiness(converter, messageQueue);
     }
 

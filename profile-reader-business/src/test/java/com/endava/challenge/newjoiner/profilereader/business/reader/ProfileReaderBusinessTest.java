@@ -1,6 +1,6 @@
 package com.endava.challenge.newjoiner.profilereader.business.reader;
 
-import com.endava.challenge.newjoiner.profilereader.control.converter.Converter;
+import com.endava.challenge.newjoiner.profilereader.control.converter.ReactiveConversionService;
 import com.endava.challenge.newjoiner.profilereader.control.message.MessageQueue;
 import com.endava.challenge.newjoiner.profilereader.control.validation.Validation;
 import com.endava.challenge.newjoiner.profilereader.model.domain.FileType;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ProfileReaderBusinessTest {
 
-    private Converter converter;
+    private ReactiveConversionService converter;
     private MessageQueue messageQueue;
     private ProfileReaderBusiness profileReaderBusiness;
     private ProfileFile profileFile;
@@ -32,14 +32,9 @@ class ProfileReaderBusinessTest {
 
     @BeforeEach
     void setupTest() {
-        converter = Mockito.mock(Converter.class);
+        converter = Mockito.mock(ReactiveConversionService.class);
         messageQueue = Mockito.mock(MessageQueue.class);
         profileReaderBusiness = new ProfileReaderBusiness(converter, messageQueue);
-
-        Mockito.doAnswer(this::functionConvertTo)
-                .when(converter)
-                .convertTo(Mockito.eq(ProfileFile.class),
-                        Mockito.eq(Profile.class));
 
         Mockito.doAnswer(this::functionReturnProfile)
                 .when(messageQueue)
@@ -50,8 +45,8 @@ class ProfileReaderBusinessTest {
         return invocationOnMock.getArgument(0);
     }
 
-    private Object functionConvertTo(InvocationOnMock invocationOnMock) {
-        return (Function<? super ProfileFile, Profile>) (obj) -> this.converter.convert(obj, ProfileFile.class, Profile.class);
+    private Object returnMonoForResult(InvocationOnMock invocationOnMock) {
+        return (Function<ProfileFile, Mono<Profile>>) (p) -> Mono.just(this.profileReturned);
     }
 
     @Test
@@ -60,6 +55,12 @@ class ProfileReaderBusinessTest {
         givenAConversionForThatProfileFile();
         whenTheProfileFileIsProcessed();
         thenReturnsACompleteProfile();
+    }
+
+    private void givenAConversionForThatProfileFile() {
+        Mockito.doAnswer(this::returnMonoForResult)
+                .when(this.converter)
+                .convertMono(Mockito.eq(ProfileFile.class), Mockito.eq(Profile.class));
     }
 
     private void givenAProfileFileWithACompleteProfile() {
@@ -86,14 +87,6 @@ class ProfileReaderBusinessTest {
                     assertEquals(Validation.ValidationException.class, e.getClass());
                     assertTrue(e.getMessage().contains(field));
                 });
-    }
-
-    private void givenAConversionForThatProfileFile() {
-        Mockito.doReturn(this.profileReturned)
-                .when(this.converter)
-                .convert(Mockito.eq(this.profileFile),
-                        Mockito.eq(ProfileFile.class),
-                        Mockito.eq(Profile.class));
     }
 
     private void whenTheProfileFileIsProcessed() {

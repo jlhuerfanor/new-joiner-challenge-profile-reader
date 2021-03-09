@@ -1,6 +1,6 @@
 package com.endava.challenge.newjoiner.profilereader.business.reader;
 
-import com.endava.challenge.newjoiner.profilereader.control.converter.Converter;
+import com.endava.challenge.newjoiner.profilereader.control.converter.ReactiveConversionService;
 import com.endava.challenge.newjoiner.profilereader.control.message.MessageQueue;
 import com.endava.challenge.newjoiner.profilereader.control.validation.Validation;
 import com.endava.challenge.newjoiner.profilereader.model.domain.Profile;
@@ -13,12 +13,12 @@ import java.util.Objects;
 
 public class ProfileReaderBusiness {
 
-    private final Converter converter;
+    private final ReactiveConversionService converter;
     private final MessageQueue messageQueue;
     private final List<Validation<Profile>> profileValidationList = profileValidations();
     private final List<Validation<ProfileFile>> fileValidationList = fileValidations();
 
-    public ProfileReaderBusiness(Converter converter, MessageQueue messageQueue) {
+    public ProfileReaderBusiness(ReactiveConversionService converter, MessageQueue messageQueue) {
         this.converter = converter;
         this.messageQueue = messageQueue;
     }
@@ -28,7 +28,7 @@ public class ProfileReaderBusiness {
                 .flatMapMany(file -> Flux.fromIterable(fileValidationList)
                         .map(validation -> validation.validate(file)))
                 .last()
-                .map(converter.convertTo(ProfileFile.class, Profile.class))
+                .flatMap(converter.convertMono(ProfileFile.class, Profile.class))
                 .flatMapMany(pf -> Flux.fromIterable(profileValidationList)
                         .map(validation -> validation.validate(pf)))
                 .last()

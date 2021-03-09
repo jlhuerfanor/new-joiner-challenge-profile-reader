@@ -1,7 +1,7 @@
 package com.endava.challenge.newjoiner.profilereader.web.rest;
 
 
-import com.endava.challenge.newjoiner.profilereader.business.converter.ConversionBusiness;
+import com.endava.challenge.newjoiner.profilereader.business.converter.ReactiveConversionBusiness;
 import com.endava.challenge.newjoiner.profilereader.business.reader.ProfileReaderBusiness;
 import com.endava.challenge.newjoiner.profilereader.model.domain.Profile;
 import com.endava.challenge.newjoiner.profilereader.model.domain.ProfileFile;
@@ -9,11 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -21,19 +21,19 @@ import reactor.core.publisher.Mono;
 public class ProfileReadRS {
     private static Logger log = LoggerFactory.getLogger(ProfileReadRS.class);
 
-    private final ConversionBusiness conversionService;
+    private final ReactiveConversionBusiness reactiveConversionBusiness;
     private final ProfileReaderBusiness profileReaderBusiness;
 
     @Autowired
-    public ProfileReadRS(ConversionBusiness conversionService, ProfileReaderBusiness profileReaderBusiness) {
-        this.conversionService = conversionService;
+    public ProfileReadRS(ReactiveConversionBusiness conversionService, ProfileReaderBusiness profileReaderBusiness) {
+        this.reactiveConversionBusiness = conversionService;
         this.profileReaderBusiness = profileReaderBusiness;
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Mono<Profile> readProfileFile(@RequestParam("file") MultipartFile file) {
+    public Mono<Profile> readProfileFile(@RequestPart("file") FilePart file) {
         return Mono.just(file)
-                .map(conversionService.convertTo(MultipartFile.class, ProfileFile.class))
+                .flatMap(this.reactiveConversionBusiness.convertMono(FilePart.class, ProfileFile.class))
                 .flatMap(this.profileReaderBusiness::process);
     }
 }
