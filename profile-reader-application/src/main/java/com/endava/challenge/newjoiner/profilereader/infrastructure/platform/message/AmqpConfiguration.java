@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -45,8 +46,15 @@ public class AmqpConfiguration {
     }
 
     @Bean
+    public AmqpAdmin amqpAdmin(ConnectionFactory connectionFactory) {
+        var admin = new RabbitAdmin(connectionFactory);
+
+        return admin;
+    }
+
+    @Bean
     public Queue profileQueue() {
-        return new Queue(amqpParameter.getQueueName(), false);
+        return new Queue(amqpParameter.getQueueName());
     }
 
     @Bean
@@ -58,7 +66,7 @@ public class AmqpConfiguration {
     public Binding binding(Queue profileQueue, TopicExchange topicExchange) {
         return BindingBuilder.bind(profileQueue)
                 .to(topicExchange)
-                .with(amqpParameter.getDefaultTopic());
+                .with(amqpParameter.getDefaultQueueTopic());
     }
 
     @Bean
@@ -67,7 +75,7 @@ public class AmqpConfiguration {
         var template = new RabbitTemplate(connectionFactory);
 
         template.setExchange(amqpParameter.getTopicExchangeName());
-        template.setRoutingKey(amqpParameter.getDefaultTopic());
+        template.setRoutingKey(amqpParameter.getDefaultExchangeTopic());
         template.setDefaultReceiveQueue(amqpParameter.getQueueName());
 
         return template;
