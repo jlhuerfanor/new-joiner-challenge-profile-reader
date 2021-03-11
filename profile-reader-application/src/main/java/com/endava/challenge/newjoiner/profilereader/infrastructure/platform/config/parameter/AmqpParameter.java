@@ -13,5 +13,6 @@ public class AmqpParameter {
     private String password;
     private String topicExchangeName;
     private String queueName;
-    private String defaultTopic;
+    private String defaultQueueTopic;
+    private String defaultExchangeTopic;
 }

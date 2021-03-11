@@ -48,7 +48,8 @@ public class ParameterConfiguration {
     public AmqpParameter amqpParameter(
             @Value("${application.message.amqp.topic-exchange-name}") String topicExchangeName,
             @Value("${application.message.amqp.queue-name}") String queueName,
-            @Value("${application.message.amqp.default-topic}") String defaultTopic,
+            @Value("${application.message.amqp.default-queue-topic}") String defaultQueueTopic,
+            @Value("${application.message.amqp.default-exchange-topic}") String defaultExchangeTopic,
             @Value("${application.message.amqp.uri}") String uri,
             @Value("${application.message.amqp.username}") String username,
             @Value("${application.message.amqp.password}") String password
@@ -57,7 +58,8 @@ public class ParameterConfiguration {
                 .uri(uri)
                 .topicExchangeName(topicExchangeName)
                 .queueName(queueName)
-                .defaultTopic(defaultTopic)
+                .defaultQueueTopic(defaultQueueTopic)
+                .defaultExchangeTopic(defaultExchangeTopic)
                 .username(username)
                 .password(password)
                 .build();
