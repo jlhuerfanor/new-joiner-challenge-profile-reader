@@ -12,12 +12,13 @@ application:
 
   message:
     amqp:
-      uri: amqps://eagle.rmq.cloudamqp.com/ugnhyqna
-      username: ugnhyqna
-      password: OOwedAYB1y3BX3v4FjoX598A81S0QNrj
+      uri: amqps://woodpecker.rmq.cloudamqp.com/jmodcbnq
+      username: jmodcbnq
+      password: y9TkU5HAx6xp6cHod7Gv1lfUwe0vevIF
       topic-exchange-name: profile-exchange
       queue-name: profile-reader-queue
-      default-topic: joiner.profile.new
+      default-exchange-topic: joiner.profile.new
+      default-queue-topic: joiner.profile.amend
 
 # ---------------
 
