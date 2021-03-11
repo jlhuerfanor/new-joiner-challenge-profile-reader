@@ -3,7 +3,7 @@
     <parent>
         <artifactId>profile-reader-adapter</artifactId>
         <groupId>com.endava.challenge.new-joiner</groupId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>profile-reader-adapter-rest</artifactId>
@@ -18,19 +18,19 @@
         <dependency>
             <groupId>com.endava.challenge.new-joiner</groupId>
             <artifactId>profile-reader-model</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.endava.challenge.new-joiner</groupId>
             <artifactId>profile-reader-client-model</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.endava.challenge.new-joiner</groupId>
             <artifactId>profile-reader-business</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
